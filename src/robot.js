@@ -3,7 +3,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 
 export function createRobot() {
   const robot = new THREE.Group();
-  robot.name = 'AXIS_RK_06';
+  robot.name = 'EMNI_RK_06';
   const shellMaterials = [];
   const wireOverlays = [];
 

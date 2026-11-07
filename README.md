@@ -1,4 +1,4 @@
-# AXIS — Robotics Lab
+# emni — Robotics Lab
 
 An interactive, six-axis robot arm built with Three.js. The RK—06 concept features a translucent blue shell, detailed mechanical joints, and real-time articulation.
 

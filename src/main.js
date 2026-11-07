@@ -288,7 +288,7 @@ document.querySelector('#export-button').addEventListener('click', async () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'axis-rk-06.glb';
+    link.download = 'emni-rk-06.glb';
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     toast('RK—06 exported successfully');
