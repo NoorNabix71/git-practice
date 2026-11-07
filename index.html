@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080c12" />
+    <meta name="description" content="An interactive six-axis robotic arm, rendered live in Three.js. Explore precision in motion." />
+    <title>AXIS — Robotics Lab</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080c12'/%3E%3Cpath d='M8 23 16 7l8 16M11 18h10' stroke='%234aa8ff' stroke-width='2.5' fill='none'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="header">
+        <a class="brand" href="./" aria-label="Axis Robotics home">
+          <svg class="brand-mark" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="m18 4 13 7.5v13L18 32 5 24.5v-13L18 4Z" stroke="currentColor" stroke-width="1.5"/><path d="m11.5 23 6.5-12 6.5 12M14 19h8" stroke="currentColor" stroke-width="1.7"/></svg>
+          <span>AXIS<span class="brand-dot">®</span></span>
+          <span class="brand-divider"></span>
+          <span class="brand-sub">ROBOTICS LAB</span>
+        </a>
+        <nav class="top-nav" aria-label="Main navigation">
+          <button class="nav-item active">Playground</button>
+          <button class="nav-item" id="specs-button">Specifications</button>
+        </nav>
+        <div class="header-actions">
+          <span class="system-status"><i></i> SYSTEM ONLINE</span>
+          <button class="button button-secondary export-button" id="export-button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Export model
+          </button>
+        </div>
+      </header>
+
+      <main class="main">
+        <section class="intro">
+          <div>
+            <div class="eyebrow"><span>INTERACTIVE SERIES</span><span class="eyebrow-line"></span><span>001</span></div>
+            <h1>Precision in <span>motion.</span></h1>
+            <p>Explore the mechanics of possibility. One joint at a time.</p>
+          </div>
+          <div class="model-id"><span>MODEL</span><strong>RK—06</strong><small>6-AXIS ARTICULATED ARM</small></div>
+        </section>
+
+        <section class="workspace">
+          <aside class="control-panel">
+            <div class="panel-heading">
+              <div><span class="section-kicker">CONTROL DECK</span><h2>Joint controls</h2></div>
+              <button class="icon-button" id="reset-joints" aria-label="Reset all joints" title="Reset joints"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6M5.5 15a7 7 0 1 0 .5-7l-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+            <div class="joint-list" id="joint-list"></div>
+            <div class="presets">
+              <div class="section-label">POSITION PRESETS</div>
+              <div class="preset-grid">
+                <button class="preset active" data-preset="home"><svg viewBox="0 0 24 24" fill="none"><path d="m4 11 8-7 8 7M6 9v11h12V9M10 20v-6h4v6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Home</button>
+                <button class="preset" data-preset="pick"><svg viewBox="0 0 24 24" fill="none"><path d="M8 3v9m8-9v9M8 8H5v5a7 7 0 0 0 14 0V8h-3M12 20v-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Pick</button>
+                <button class="preset" data-preset="reach"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16m-5-5 5 5-5 5M4 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Reach</button>
+                <button class="preset" data-preset="inspect"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m15.5 15.5 5 5M8 10.5h5m-2.5-2.5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Inspect</button>
+              </div>
+            </div>
+            <div class="appearance">
+              <div class="section-label">APPEARANCE</div>
+              <label class="toggle-row"><span><i class="material-dot"></i>Transparent shell</span><input id="transparency-toggle" type="checkbox" checked><span class="toggle"></span></label>
+              <label class="toggle-row"><span><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>Wireframe overlay</span><input id="wireframe-toggle" type="checkbox"><span class="toggle"></span></label>
+            </div>
+            <button class="button run-button" id="run-button"><span class="run-icon"><svg viewBox="0 0 20 20" fill="none"><path d="m7 5 8 5-8 5V5Z" fill="currentColor"/></svg></span><span id="run-label">Run demo sequence</span><span class="shortcut">SPACE</span></button>
+          </aside>
+
+          <div class="viewer-panel" id="viewer-panel">
+            <div class="viewer-topbar">
+              <div class="live-badge"><i></i> LIVE VIEWPORT</div>
+              <div class="viewer-actions">
+                <button class="viewer-button active" id="labels-button" title="Toggle annotations" aria-label="Toggle annotations"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H9l-5 4V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 9h8m-8 3h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+                <button class="viewer-button" id="camera-button" title="Change camera view" aria-label="Change camera view"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h4l2-3h4l2 3h4v13H4V7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                <button class="viewer-button" id="reset-camera" title="Reset camera" aria-label="Reset camera"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6M5.5 15a7 7 0 1 0 .5-7l-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <span class="toolbar-divider"></span>
+                <button class="viewer-button" id="fullscreen-button" title="Fullscreen" aria-label="Enter fullscreen"><svg viewBox="0 0 24 24" fill="none"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </div>
+            </div>
+            <div id="scene-container" aria-label="Interactive 3D model of a blue transparent robot arm"></div>
+            <div class="scene-vignette"></div>
+            <div class="model-label">
+              <span class="model-number">06</span>
+              <div><strong>RK—06</strong><span>ARTICULATED ROBOT</span></div>
+            </div>
+            <div class="annotation" id="label-shoulder"><i></i><span>J02</span> SHOULDER</div>
+            <div class="annotation" id="label-wrist"><i></i><span>J04</span> WRIST</div>
+            <div class="viewport-info"><span>PERSPECTIVE</span><span>MM</span><span>60 FPS</span></div>
+            <div class="orientation-widget" aria-hidden="true">
+              <div class="axis axis-y"><span>Y</span></div><div class="axis axis-x"><span>X</span></div><div class="axis axis-z"><span>Z</span></div><i></i>
+            </div>
+            <div class="viewer-bottom">
+              <div class="orbit-hint"><svg viewBox="0 0 24 24" fill="none"><path d="M8 13V7a2 2 0 0 1 4 0v5-7a2 2 0 0 1 4 0v7-4a2 2 0 0 1 4 0v7c0 4-3 6-7 6-3 0-5-2-6-4l-3-5a2 2 0 0 1 3-2l1 1Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Drag</strong> to orbit<span class="hint-dot">·</span><strong>Scroll</strong> to zoom</span></div>
+              <div class="render-quality"><i></i> REAL-TIME RENDER</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="telemetry" aria-label="Robot telemetry">
+          <div class="telemetry-title"><span class="pulse-ring"></span><div><strong>All systems nominal</strong><span>REAL-TIME TELEMETRY</span></div></div>
+          <div class="metric"><span>AXES</span><strong>06<small>DOF</small></strong></div>
+          <div class="metric"><span>MAX. REACH</span><strong>2.4<small>M</small></strong></div>
+          <div class="metric"><span>PAYLOAD</span><strong>12<small>KG</small></strong></div>
+          <div class="metric"><span>REPEATABILITY</span><strong>±0.02<small>MM</small></strong></div>
+          <div class="tcp-metric"><span>TOOL CENTER POINT</span><div><strong id="tcp-x">X +0.00</strong><strong id="tcp-y">Y +0.00</strong><strong id="tcp-z">Z +0.00</strong></div></div>
+        </section>
+      </main>
+      <footer class="footer"><span>ENGINEERED TO EXPLORE.</span><span>WEBGL 2.0 <i></i> THREE.JS <i></i> RK06.2026</span></footer>
+    </div>
+
+    <dialog id="specs-dialog">
+      <button class="dialog-close icon-button" aria-label="Close specifications">×</button>
+      <span class="section-kicker">TECHNICAL OVERVIEW</span><h2>RK—06 Specifications</h2>
+      <p>A concept six-axis industrial manipulator designed for precision assembly, material handling, and exploration.</p>
+      <dl><div><dt>Configuration</dt><dd>6-axis articulated</dd></div><div><dt>Maximum reach</dt><dd>2.4 meters</dd></div><div><dt>Rated payload</dt><dd>12 kilograms</dd></div><div><dt>Repeatability</dt><dd>±0.02 mm</dd></div><div><dt>Shell</dt><dd>Translucent polymer</dd></div><div><dt>Visualization</dt><dd>Three.js / WebGL</dd></div></dl>
+      <small>This is an interactive design concept, not a manufacturing specification.</small>
+    </dialog>
+    <div id="toast" role="status"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
