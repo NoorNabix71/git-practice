@@ -11,6 +11,10 @@ npm run dev
 
 Create a production build with `npm run build`.
 
+## GitHub Pages
+
+The website is deployed automatically to **https://noornabix71.github.io/git-practice/** by the GitHub Actions workflow in `.github/workflows/deploy.yml`. Pushes to `main` or the Arena working branch trigger a new deployment. The workflow sets Vite's base path to `/git-practice/` for correct asset loading on GitHub Pages.
+
 ## Controls
 
 - Drag the model to orbit; scroll or pinch to zoom.
